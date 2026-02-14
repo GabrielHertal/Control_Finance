@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="control_finance.client/control_finance.client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="Control_Finance.Server/Control_Finance.Server.csproj" />
+</Solution>

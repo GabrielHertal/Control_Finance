@@ -3,6 +3,7 @@ using Control_Finance.Server.Extensoes;
 using Control_Finance.Server.Models;
 using Control_Finance.Server.Services.Categoria;
 using Control_Finance.Server.Services.Conta;
+using Control_Finance.Server.Services.Lancamento;
 using Control_Finance.Server.Services.Security;
 using Control_Finance.Server.Services.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -45,6 +46,7 @@ builder.Services.AddScoped<IUsersService, UserService>();
 builder.Services.AddScoped<ISecurityService, SecurityService>();
 builder.Services.AddScoped<ICategoriasService, CategoriasService>();
 builder.Services.AddScoped<IContasService, ContaService>();
+builder.Services.AddScoped<ILancamentoService, LancamentoService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

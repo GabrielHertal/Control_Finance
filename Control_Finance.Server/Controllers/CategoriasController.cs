@@ -10,13 +10,9 @@ namespace Control_Finance.Server.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class CategoriasController : ControllerBase
+    public class CategoriasController(ICategoriasService categoriaService) : ControllerBase
     {
-        private readonly ICategoriasService _categoriaService;
-        public CategoriasController(ICategoriasService categoriaService)
-        {
-            _categoriaService = categoriaService;
-        }
+        private readonly ICategoriasService _categoriaService = categoriaService;
         [HttpPost("CreateCategoria")]
         public async Task<IActionResult> CreateCategoria([FromBody] CategoriasDTO categoriaDTO)
         {

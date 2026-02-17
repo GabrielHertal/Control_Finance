@@ -10,13 +10,9 @@ namespace Control_Finance.Server.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class ContasController : ControllerBase
+    public class ContasController(IContasService contaService) : ControllerBase
     {
-        private readonly IContasService _contaService;
-        public ContasController(IContasService contaService)
-        {
-            _contaService = contaService;
-        }
+        private readonly IContasService _contaService = contaService;
         [HttpPost("CreateConta")]
         public async Task<ActionResult> CreateConta([FromBody] ContasDTO contaDTO)
         {

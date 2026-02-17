@@ -121,7 +121,7 @@ const Contas = () => {
         <div className="container mt-4">
             <h1 className="text-center mb-4">Contas</h1>
             <div className="d-flex justify-content-end mb-3">
-                <Button variant="primary" onClick={() => setShowModal(true)}>
+                <Button variant="primary" onClick={() => { setShowModal(true); setNewConta({ titulo: "", tipo: "-1" }); }}>
                     + Criar Conta
                 </Button>
             </div>

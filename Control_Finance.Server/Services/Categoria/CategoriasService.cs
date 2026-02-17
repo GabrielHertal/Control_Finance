@@ -12,44 +12,72 @@ namespace Control_Finance.Server.Services.Categoria
 
         public async Task<ResultRequisitions> CreateCategoriaAsync(string nome, int fkIdUser, bool ativo)
         {
-            var categoria = new Categorias
+            try
             {
-                Id = 0,
-                Titulo = nome,
-                FkIdUser = fkIdUser,
-                Ativo = true
-            };
-            _context.Categorias.Add(categoria);
-            await _context.SaveChangesAsync();
-            return new ResultRequisitions
+                var categoria = new Categorias
+                {
+                    Id = 0,
+                    Titulo = nome,
+                    FkIdUser = fkIdUser,
+                    Ativo = true
+                };
+                _context.Categorias.Add(categoria);
+                await _context.SaveChangesAsync();
+                return new ResultRequisitions
+                {
+                    Success = true,
+                    Code = (int)ResultsRequests.Created,
+                    Message = "Categoria criada com sucesso."
+                };
+            }
+            catch (Exception ex)
             {
-                Success = true,
-                Code = (int)ResultsRequests.Created,
-                Message = "Categoria criada com sucesso."
-            };
-        }
-        public async Task<ResultRequisitions> UpdateCategoriaByIdAsync(int id, string nome, bool ativo)
-        {
-            var categoria = await _context.Categorias.FindAsync(id);
-            if (categoria == null)
-            {
+                Console.Error.WriteLine(ex);
                 return new ResultRequisitions
                 {
                     Success = false,
-                    Code = (int)ResultsRequests.NotFound,
-                    Message = "Categoria não encontrada."
+                    Code = (int)ResultsRequests.BadRequest,
+                    Message = $"Ocorreu um erro ao criar a categoria: {ex.Message}",
+                    Data = ex
                 };
             }
-            categoria.Titulo = nome;
-            categoria.Ativo = ativo;
-            _context.Categorias.Update(categoria);
-            await _context.SaveChangesAsync();
-            return new ResultRequisitions
+        }
+        public async Task<ResultRequisitions> UpdateCategoriaByIdAsync(int id, string nome, bool ativo)
+        {
+            try
             {
-                Success = true,
-                Code = (int)ResultsRequests.Success,
-                Message = "Categoria atualizada com sucesso."
-            };
+                var categoria = await _context.Categorias.FindAsync(id);
+                if (categoria == null)
+                {
+                    return new ResultRequisitions
+                    {
+                        Success = false,
+                        Code = (int)ResultsRequests.NotFound,
+                        Message = "Categoria não encontrada."
+                    };
+                }
+                categoria.Titulo = nome;
+                categoria.Ativo = ativo;
+                _context.Categorias.Update(categoria);
+                await _context.SaveChangesAsync();
+                return new ResultRequisitions
+                {
+                    Success = true,
+                    Code = (int)ResultsRequests.Success,
+                    Message = "Categoria atualizada com sucesso."
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                return new ResultRequisitions
+                {
+                    Success = false,
+                    Code = (int)ResultsRequests.BadRequest,
+                    Message = $"Ocorreu um erro ao atualizar a categoria: {ex.Message}",
+                    Data = ex
+                };
+            }
         }
         public async Task<ResultRequisitions> DeleteCategoriaByIdAsync(int id)
         {
@@ -75,72 +103,104 @@ namespace Control_Finance.Server.Services.Categoria
                     Message = "Categoria deletada com sucesso."
                 };
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                Console.Error.WriteLine(ex);
+                return new ResultRequisitions
+                {
+                    Success = false,
+                    Code = (int)ResultsRequests.BadRequest,
+                    Message = $"Ocorreu um erro ao deletar a categoria: {ex.Message}",
+                    Data = ex
+                };
             }
         }
         public async Task<ResultRequisitions> GetCategoriaByIdAsync(int id)
         {
-            var categoria = await _context.Categorias.FindAsync(id);
-            if (categoria == null)
+            try
             {
+                var categoria = await _context.Categorias.FindAsync(id);
+                if (categoria == null)
+                {
+                    return new ResultRequisitions
+                    {
+                        Success = false,
+                        Code = (int)ResultsRequests.NotFound,
+                        Message = "Categoria não encontrada."
+                    };
+                }
+                return new ResultRequisitions
+                {
+                    Success = true,
+                    Code = (int)ResultsRequests.Success,
+                    Message = "Categoria encontrada com sucesso.",
+                    Data = new CategoriasDTO
+                    {
+                        Id = categoria.Id,
+                        Nome = categoria.Titulo,
+                        Ativo = categoria.Ativo,
+                        FkIdUser = categoria.FkIdUser
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
                 return new ResultRequisitions
                 {
                     Success = false,
-                    Code = (int)ResultsRequests.NotFound,
-                    Message = "Categoria não encontrada."
+                    Code = (int)ResultsRequests.BadRequest,
+                    Message = $"Ocorreu um erro ao buscar a categoria: {ex.Message}",
+                    Data = ex
                 };
             }
-            return new ResultRequisitions
-            {
-                Success = true,
-                Code = (int)ResultsRequests.Success,
-                Message = "Categoria encontrada com sucesso.",
-                Data = new CategoriasDTO
-                {
-                    Id = categoria.Id,
-                    Nome = categoria.Titulo,
-                    Ativo = categoria.Ativo,
-                    FkIdUser = categoria.FkIdUser
-                }
-            };
         }
         public async Task<List<ResultRequisitions>> GetAllCategoriasByUserIdAsync(int id)
-        { 
-            var categorias = await _context.Categorias
-                                           .Select(c => new CategoriasDTO
-                                           {
-                                               Id = c.Id,
-                                               Nome = c.Titulo,
-                                               Ativo = c.Ativo,
-                                               FkIdUser = c.FkIdUser
-                                           })
-                                           .Where(i => i.FkIdUser == id && i.Ativo == true)
-                                           .OrderBy(i => i.Id)
-                                           .ToListAsync();
-            if(categorias == null)
+        {
+            try
             {
-                return [new ResultRequisitions
+                var categorias = await _context.Categorias
+                                               .Where(i => i.FkIdUser == id && i.Ativo == true)
+                                               .OrderBy(i => i.Id)
+                                               .ToListAsync();
+                if (categorias == null)
                 {
-                    Success = false,
-                    Code = (int)ResultsRequests.NotFound,
-                    Message = "Nenhuma categoria encontrada para este usuário."
-                }];
-            }    
-            return [new ResultRequisitions
+                    return [new ResultRequisitions
+                    {
+                        Success = false,
+                        Code = (int)ResultsRequests.NotFound,
+                        Message = "Nenhuma categoria encontrada para este usuário."
+                    }];
+                }
+                return new List<ResultRequisitions>
+                {
+                    new ResultRequisitions
+                    {
+                        Success = true,
+                        Code = (int)ResultsRequests.Success,
+                        Message = "Categorias encontradas com sucesso.",
+                        Data = categorias.Select(c => new CategoriasDTO
+                        {
+                            Id = c.Id,
+                            Nome = c.Titulo
+                        }).ToList()
+                    }
+                }; 
+            }
+            catch (Exception ex)
             {
-                Success = true,
-                Code = (int)ResultsRequests.Success,
-                Message = "Categorias encontradas com sucesso.",
-                Data = categorias.Select(categorias => new CategoriasDTO
+                Console.Error.WriteLine(ex);
+                return new List<ResultRequisitions>
                 {
-                    Id = categorias.Id,
-                    Nome = categorias.Nome,
-                    Ativo = categorias.Ativo,
-                    FkIdUser = categorias.FkIdUser
-                }).ToList()
-            }];
+                    new ResultRequisitions
+                    {
+                        Success = false,
+                        Code = (int)ResultsRequests.BadRequest,
+                        Message = $"Ocorreu um erro ao buscar as categorias: {ex.Message}",
+                        Data = ex
+                    }
+                };
+            }
         }
     }
 }

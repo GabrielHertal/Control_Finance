@@ -28,7 +28,7 @@ export const GetCategoriaById = async (id) => {
     try
     {
         const response = await api.get(`/Categorias/GetCategoriaById/${id}`);
-        return response;
+        return response.data;
     }
     catch (error)
     {

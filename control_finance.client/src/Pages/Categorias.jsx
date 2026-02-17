@@ -71,7 +71,6 @@ const Categorias = () => {
                             , nome: CategoriaToEdit.data.nome
                             , fk_id_user: CategoriaToEdit.data.fkIdUser
                             , ativo: CategoriaToEdit.data.ativo });
-            console.log(newCategoria);
             setShowModal(true);
         }
         catch (error) {
@@ -104,7 +103,7 @@ const Categorias = () => {
         }
     };
     // Deletar categoria
-        const handleDeleteCategoria = async (id) => {
+    const handleDeleteCategoria = async (id) => {
         try 
         {
             const data = await DeleteCategoria(id);
@@ -205,7 +204,7 @@ const Categorias = () => {
                         variant="secondary"
                         onClick={() => {
                             setShowModal(false);
-                            setNewCategoria({ name: "", email: "", password: "" });
+                            setNewCategoria({ nome: "", tipo: "" });
                         }}
                     >
                         Fechar

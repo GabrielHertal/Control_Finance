@@ -20,9 +20,9 @@ namespace Control_Finance.Server.Services.Users
                 {
                     return new ResultRequisitions
                     {
-                       Success = false,
-                       Code = (int)ResultsRequests.Conflict,
-                       Message = "Email já cadastrado!"
+                        Success = false,
+                        Code = (int)ResultsRequests.Conflict,
+                        Message = "Email já cadastrado!"
                     };
                 }
                 var hasher = new PasswordHasher<AppUsers>();
@@ -45,16 +45,32 @@ namespace Control_Finance.Server.Services.Users
                     Message = "Usuário criado com sucesso!"
                 };
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
-            }
+                Console.Error.WriteLine(ex);
+                return new ResultRequisitions
+                {
+                    Success = false,
+                    Code = (int)ResultsRequests.BadRequest,
+                    Message = "Ocorreu um erro ao criar o usuário!",
+                    Data = ex
+                };
+            }   
         }
         public async Task<ResultRequisitions> UpdateUserByIdAsync(int id, string nome, string email, string senha, DateOnly dataNascimento, decimal? rendaMensal)
         {
             try
             {
-                var user = await _userManager.FindByIdAsync(id.ToString()) ?? throw new Exception("Usuário não encontrado!");
+                var user = await _userManager.FindByIdAsync(id.ToString());
+                if(user == null)
+                {
+                    return new ResultRequisitions
+                    {
+                        Success = false,
+                        Code = (int)ResultsRequests.NotFound,
+                        Message = "Usuário não encontrado!"
+                    };
+                }
                 if (user.Email != email)
                 {
                     var emailUser = await _userManager.FindByEmailAsync(email);
@@ -92,9 +108,16 @@ namespace Control_Finance.Server.Services.Users
                     Message = "Usuário atualizado com sucesso!"
                 };
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                Console.Error.WriteLine(ex);
+                return new ResultRequisitions
+                {
+                    Success = false,
+                    Code = (int)ResultsRequests.BadRequest,
+                    Message = "Ocorreu um erro ao atualizar o usuário!",
+                    Data = ex
+                };
             }
         }
         public async Task<ResultRequisitions> DeleteUserByIdAsync(int id)
@@ -119,9 +142,16 @@ namespace Control_Finance.Server.Services.Users
                     Message = "Usuário deletado com sucesso!"
                 };
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                Console.Error.WriteLine(ex);
+                return new ResultRequisitions
+                {
+                    Success = false,
+                    Code = (int)ResultsRequests.BadRequest,
+                    Message = "Ocorreu um erro ao deletar o usuário!",
+                    Data = ex
+                };
             }
         }
         public async Task<ResultRequisitions> GetUserByIdAsync(int id)
@@ -130,12 +160,14 @@ namespace Control_Finance.Server.Services.Users
             {
                 var user = await _userManager.FindByIdAsync(id.ToString());
                 if(user == null)
-                return new ResultRequisitions
                 {
-                    Success = false,
-                    Code = (int)ResultsRequests.NotFound,
-                    Message = "Usuário não encontrado!"
-                };
+                    return new ResultRequisitions
+                    {
+                        Success = false,
+                        Code = (int)ResultsRequests.NotFound,
+                        Message = "Usuário não encontrado!"
+                    };
+                }
                 return new ResultRequisitions
                 {
                     Success = true,
@@ -152,9 +184,16 @@ namespace Control_Finance.Server.Services.Users
                     }
                 };
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                Console.Error.WriteLine(ex);
+                return new ResultRequisitions
+                {
+                    Success = false,
+                    Code = (int)ResultsRequests.BadRequest,
+                    Message = "Ocorreu um erro ao buscar o usuário!",
+                    Data = ex
+                };
             }
         }
         public async Task<List<ResultRequisitions>> GetAllUsers()
@@ -174,26 +213,38 @@ namespace Control_Finance.Server.Services.Users
                         Message = "Nenhum usuário encontrado!"
                     }];
                 }
-                return [new ResultRequisitions
+                return new List<ResultRequisitions>
                 {
-                    Success = true,
-                    Code = (int)ResultsRequests.Success,
-                    Message = "Usuários encontrados com sucesso!",
-                    Data = users.Select(user => new UsersDTO
+                    new ResultRequisitions
                     {
-                        Id = user.Id,
-                        Nome = user.Nome,
-                        Email = user.Email!,
-                        DataNascimento = user.DataNascimento,
-                        RendaMensal = user.RendaMensal,
-                        DataCriacao = user.DataCriacao,
-                        Ativo = user.Ativo
-                    }).ToList()
-                }];
+                        Success = true,
+                        Code = (int)ResultsRequests.Success,
+                        Message = "Usuários encontrados com sucesso!",
+                        Data = users.Select(user => new UsersDTO
+                        {
+                            Id = user.Id,
+                            Nome = user.Nome,
+                            Email = user.Email!,
+                            DataNascimento = user.DataNascimento,
+                            RendaMensal = user.RendaMensal,
+                            DataCriacao = user.DataCriacao
+                        }).ToList()
+                    }
+                };
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                Console.Error.WriteLine(ex);
+                return new List<ResultRequisitions>
+                {
+                    new ResultRequisitions
+                    {
+                        Success = false,
+                        Code = (int)ResultsRequests.BadRequest,
+                        Message = "Ocorreu um erro ao buscar os usuários!",
+                        Data = ex
+                    }
+                };
             }
         }
     }

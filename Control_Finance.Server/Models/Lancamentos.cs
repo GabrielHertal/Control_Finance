@@ -34,7 +34,7 @@ namespace Control_Finance.Server.Models
         [Comment("1 - Despesa, 2 - Receita, 3 - Investimento")]
         public TipoLancamento Tipo_Lancamento { get; set; }
         [ForeignKey("Contas")]
-        public required int Fk_Id_Conta { get; set; }
+        public  int Fk_Id_Conta { get; set; }
         public Contas? Contas { get; set; } = null;
         [Required]
         [DefaultValue(true)]

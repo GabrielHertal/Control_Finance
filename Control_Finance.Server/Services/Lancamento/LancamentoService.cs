@@ -32,20 +32,20 @@ namespace Control_Finance.Server.Services.Lancamento
                 };
                 _context.Lancamentos.Add(lancamento);
                 await _context.SaveChangesAsync();
-                return new ResultRequisitions
+                return new()
                 {
                     Success = true,
-                    Code = (int)ResultsRequests.Success,
+                    Code = ResultsRequests.Success,
                     Message = "Lançamento criado com sucesso"
                 };
             }
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                return new ResultRequisitions
+                return new()
                 {
                     Success = false,
-                    Code = (int)ResultsRequests.BadRequest,
+                    Code = ResultsRequests.BadRequest,
                     Message = "Erro ao criar lançamento",
                     Data = ex
                 };
@@ -59,10 +59,10 @@ namespace Control_Finance.Server.Services.Lancamento
                 var lancamento = await _context.Lancamentos.FindAsync(id);
                 if (lancamento == null)
                 {
-                    return new ResultRequisitions
+                    return new()
                     {
                         Success = false,
-                        Code = (int)ResultsRequests.NotFound,
+                        Code = ResultsRequests.NotFound,
                         Message = "Lançamento não encontrado"
                     };
                 }
@@ -79,20 +79,20 @@ namespace Control_Finance.Server.Services.Lancamento
                 lancamento.Fk_Id_Conta = fk_Id_Conta;
                 lancamento.Ativo = ativo;
                 await _context.SaveChangesAsync();
-                return new ResultRequisitions
+                return new()
                 {
                     Success = true,
-                    Code = (int)ResultsRequests.Success,
+                    Code = ResultsRequests.Success,
                     Message = "Lançamento atualizado com sucesso"
                 };
             }
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                return new ResultRequisitions
+                return new()
                 {
                     Success = false,
-                    Code = (int)ResultsRequests.BadRequest,
+                    Code = ResultsRequests.BadRequest,
                     Message = "Erro ao atualizar lançamento",
                     Data = ex
                 };
@@ -105,29 +105,29 @@ namespace Control_Finance.Server.Services.Lancamento
                 var lancamento = await _context.Lancamentos.FindAsync(id);
                 if (lancamento == null)
                 {
-                    return new ResultRequisitions
+                    return new()
                     {
                         Success = false,
-                        Code = (int)ResultsRequests.NotFound,
+                        Code = ResultsRequests.NotFound,
                         Message = "Lançamento não encontrado"
                     };
                 }
                 lancamento.Ativo = false;
                 await _context.SaveChangesAsync();
-                return new ResultRequisitions
+                return new()
                 {
                     Success = true,
-                    Code = (int)ResultsRequests.Success,
+                    Code = ResultsRequests.Success,
                     Message = "Lançamento deletado com sucesso"
                 };
             }
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                return new ResultRequisitions
+                return new()
                 {
                     Success = false,
-                    Code = (int)ResultsRequests.BadRequest,
+                    Code = ResultsRequests.BadRequest,
                     Message = "Erro ao deletar lançamento",
                     Data = ex
                 };
@@ -156,10 +156,10 @@ namespace Control_Finance.Server.Services.Lancamento
                                                    Ativo = l.Ativo
                                                }).FirstOrDefaultAsync();
 
-                return new ResultRequisitions
+                return new()
                 {
                     Success = true,
-                    Code = (int)ResultsRequests.Success,
+                    Code = ResultsRequests.Success,
                     Message = "Lançamento encontrado com sucesso",
                     Data = lancamento
                 };
@@ -167,10 +167,10 @@ namespace Control_Finance.Server.Services.Lancamento
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                return new ResultRequisitions
+                return new()
                 {
                     Success = false,
-                    Code = (int)ResultsRequests.BadRequest,
+                    Code = ResultsRequests.BadRequest,
                     Message = "Erro ao buscar lançamento",
                     Data = ex
                 };
@@ -185,22 +185,22 @@ namespace Control_Finance.Server.Services.Lancamento
                                                .ToListAsync();
                 if (lancamento.Count == 0)
                 {
-                    return new List<ResultRequisitions>
+                    return new()
                     {
-                        new ResultRequisitions
+                        new()
                         {
                             Success = false,
-                            Code = (int)ResultsRequests.NotFound,
+                            Code = ResultsRequests.NotFound,
                             Message = "Nenhum lançamento encontrado para esse usuário"
                         }
                     };
                 }
-                return new List<ResultRequisitions>
+                return new()
                 {
-                    new ResultRequisitions
+                    new()
                     {
                         Success = true,
-                        Code = (int)ResultsRequests.Success,
+                        Code = ResultsRequests.Success,
                         Message = "Lançamentos encontrados com sucesso",
                         Data = lancamento.Select(l => new LancamentoDTO
                         {
@@ -224,12 +224,12 @@ namespace Control_Finance.Server.Services.Lancamento
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                return new List<ResultRequisitions>
+                return new()
                 {
-                    new ResultRequisitions
+                    new()
                     {
                         Success = false,
-                        Code = (int)ResultsRequests.BadRequest,
+                        Code = ResultsRequests.BadRequest,
                         Message = "Erro ao buscar lançamentos",
                         Data = ex
                     }

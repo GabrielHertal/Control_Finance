@@ -23,20 +23,20 @@ namespace Control_Finance.Server.Services.Categoria
                 };
                 _context.Categorias.Add(categoria);
                 await _context.SaveChangesAsync();
-                return new ResultRequisitions
+                return new()
                 {
                     Success = true,
-                    Code = (int)ResultsRequests.Created,
+                    Code = ResultsRequests.Created,
                     Message = "Categoria criada com sucesso."
                 };
             }
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                return new ResultRequisitions
+                return new()
                 {
                     Success = false,
-                    Code = (int)ResultsRequests.BadRequest,
+                    Code = ResultsRequests.BadRequest,
                     Message = $"Ocorreu um erro ao criar a categoria: {ex.Message}",
                     Data = ex
                 };
@@ -49,10 +49,10 @@ namespace Control_Finance.Server.Services.Categoria
                 var categoria = await _context.Categorias.FindAsync(id);
                 if (categoria == null)
                 {
-                    return new ResultRequisitions
+                    return new()
                     {
                         Success = false,
-                        Code = (int)ResultsRequests.NotFound,
+                        Code = ResultsRequests.NotFound,
                         Message = "Categoria não encontrada."
                     };
                 }
@@ -60,20 +60,20 @@ namespace Control_Finance.Server.Services.Categoria
                 categoria.Ativo = ativo;
                 _context.Categorias.Update(categoria);
                 await _context.SaveChangesAsync();
-                return new ResultRequisitions
+                return new()
                 {
                     Success = true,
-                    Code = (int)ResultsRequests.Success,
+                    Code = ResultsRequests.Success,
                     Message = "Categoria atualizada com sucesso."
                 };
             }
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                return new ResultRequisitions
+                return new()
                 {
                     Success = false,
-                    Code = (int)ResultsRequests.BadRequest,
+                    Code = ResultsRequests.BadRequest,
                     Message = $"Ocorreu um erro ao atualizar a categoria: {ex.Message}",
                     Data = ex
                 };
@@ -86,30 +86,30 @@ namespace Control_Finance.Server.Services.Categoria
                 var categoria = await _context.Categorias.FindAsync(id);
                 if (categoria == null)
                 {
-                    return new ResultRequisitions
+                    return new()
                     {
                         Success = false,
-                        Code = (int)ResultsRequests.NotFound,
+                        Code = ResultsRequests.NotFound,
                         Message = "Categoria não encontrada."
                     };
                 }
                 categoria.Ativo = false;
                 _context.Categorias.Update(categoria);
                 await _context.SaveChangesAsync();
-                return new ResultRequisitions
+                return new()
                 {
                     Success = true,
-                    Code = (int)ResultsRequests.Success,
+                    Code = ResultsRequests.Success,
                     Message = "Categoria deletada com sucesso."
                 };
             }
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                return new ResultRequisitions
+                return new()
                 {
                     Success = false,
-                    Code = (int)ResultsRequests.BadRequest,
+                    Code = ResultsRequests.BadRequest,
                     Message = $"Ocorreu um erro ao deletar a categoria: {ex.Message}",
                     Data = ex
                 };
@@ -125,14 +125,14 @@ namespace Control_Finance.Server.Services.Categoria
                     return new ResultRequisitions
                     {
                         Success = false,
-                        Code = (int)ResultsRequests.NotFound,
+                        Code = ResultsRequests.NotFound,
                         Message = "Categoria não encontrada."
                     };
                 }
-                return new ResultRequisitions
+                return new()
                 {
                     Success = true,
-                    Code = (int)ResultsRequests.Success,
+                    Code = ResultsRequests.Success,
                     Message = "Categoria encontrada com sucesso.",
                     Data = new CategoriasDTO
                     {
@@ -146,10 +146,10 @@ namespace Control_Finance.Server.Services.Categoria
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                return new ResultRequisitions
+                return new()
                 {
                     Success = false,
-                    Code = (int)ResultsRequests.BadRequest,
+                    Code = ResultsRequests.BadRequest,
                     Message = $"Ocorreu um erro ao buscar a categoria: {ex.Message}",
                     Data = ex
                 };
@@ -165,19 +165,19 @@ namespace Control_Finance.Server.Services.Categoria
                                                .ToListAsync();
                 if (categorias == null)
                 {
-                    return [new ResultRequisitions
+                    return [new()
                     {
                         Success = false,
-                        Code = (int)ResultsRequests.NotFound,
+                        Code = ResultsRequests.NotFound,
                         Message = "Nenhuma categoria encontrada para este usuário."
                     }];
                 }
-                return new List<ResultRequisitions>
+                return new()
                 {
-                    new ResultRequisitions
+                    new()
                     {
                         Success = true,
-                        Code = (int)ResultsRequests.Success,
+                        Code = ResultsRequests.Success,
                         Message = "Categorias encontradas com sucesso.",
                         Data = categorias.Select(c => new CategoriasDTO
                         {
@@ -190,12 +190,12 @@ namespace Control_Finance.Server.Services.Categoria
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                return new List<ResultRequisitions>
+                return new()
                 {
-                    new ResultRequisitions
+                    new()
                     {
                         Success = false,
-                        Code = (int)ResultsRequests.BadRequest,
+                        Code = ResultsRequests.BadRequest,
                         Message = $"Ocorreu um erro ao buscar as categorias: {ex.Message}",
                         Data = ex
                     }

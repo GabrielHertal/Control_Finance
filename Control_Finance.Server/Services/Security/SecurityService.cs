@@ -21,7 +21,7 @@ namespace Control_Finance.Server.Services.Security
                 return new ResultRequisitions
                 {
                     Success = true,
-                    Code = 200,
+                    Code = ResultsRequests.Success,
                     Message = "Informações do usuário recuperadas com sucesso.",
                     Data = new SecurityDTO
                     {
@@ -57,7 +57,7 @@ namespace Control_Finance.Server.Services.Security
                     return new ResultRequisitions
                     {
                         Success = false,
-                        Code = (int)ResultsRequests.NotFound,
+                        Code = ResultsRequests.NotFound,
                         Message = "Usuário não encontrado."
                     };
                 }
@@ -66,7 +66,7 @@ namespace Control_Finance.Server.Services.Security
                     return new ResultRequisitions
                     {
                         Success = true,
-                        Code = (int)ResultsRequests.Success,
+                        Code = ResultsRequests.Success,
                         Message = "Informações do usuário recuperadas com sucesso.",
                         Data = user
                     };

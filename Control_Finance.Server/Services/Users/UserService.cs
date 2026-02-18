@@ -21,7 +21,7 @@ namespace Control_Finance.Server.Services.Users
                     return new ResultRequisitions
                     {
                         Success = false,
-                        Code = (int)ResultsRequests.Conflict,
+                        Code = ResultsRequests.Conflict,
                         Message = "Email já cadastrado!"
                     };
                 }
@@ -41,7 +41,7 @@ namespace Control_Finance.Server.Services.Users
                 return new ResultRequisitions
                 {
                     Success = true,
-                    Code = (int)ResultsRequests.Created,
+                    Code = ResultsRequests.Created,
                     Message = "Usuário criado com sucesso!"
                 };
             }
@@ -51,7 +51,7 @@ namespace Control_Finance.Server.Services.Users
                 return new ResultRequisitions
                 {
                     Success = false,
-                    Code = (int)ResultsRequests.BadRequest,
+                    Code = ResultsRequests.BadRequest,
                     Message = "Ocorreu um erro ao criar o usuário!",
                     Data = ex
                 };
@@ -67,7 +67,7 @@ namespace Control_Finance.Server.Services.Users
                     return new ResultRequisitions
                     {
                         Success = false,
-                        Code = (int)ResultsRequests.NotFound,
+                        Code = ResultsRequests.NotFound,
                         Message = "Usuário não encontrado!"
                     };
                 }
@@ -79,7 +79,7 @@ namespace Control_Finance.Server.Services.Users
                         return new ResultRequisitions
                         {
                             Success = false,
-                            Code = (int)ResultsRequests.Conflict,
+                            Code = ResultsRequests.Conflict,
                             Message = "Email já cadastrado!"
                         };
                     }
@@ -104,7 +104,7 @@ namespace Control_Finance.Server.Services.Users
                 return new ResultRequisitions
                 {
                     Success = true,
-                    Code = (int)ResultsRequests.Success,
+                    Code = ResultsRequests.Success,
                     Message = "Usuário atualizado com sucesso!"
                 };
             }
@@ -114,7 +114,7 @@ namespace Control_Finance.Server.Services.Users
                 return new ResultRequisitions
                 {
                     Success = false,
-                    Code = (int)ResultsRequests.BadRequest,
+                    Code = ResultsRequests.BadRequest,
                     Message = "Ocorreu um erro ao atualizar o usuário!",
                     Data = ex
                 };
@@ -129,7 +129,7 @@ namespace Control_Finance.Server.Services.Users
                 return new ResultRequisitions
                 {
                     Success = false,
-                    Code = (int)ResultsRequests.NotFound,
+                    Code = ResultsRequests.NotFound,
                     Message = "Usuário não encontrado!"
                 };
                 user.Ativo = false;
@@ -138,7 +138,7 @@ namespace Control_Finance.Server.Services.Users
                 return new ResultRequisitions
                 {
                     Success = true,
-                    Code = (int)ResultsRequests.Success,
+                    Code = ResultsRequests.Success,
                     Message = "Usuário deletado com sucesso!"
                 };
             }
@@ -148,7 +148,7 @@ namespace Control_Finance.Server.Services.Users
                 return new ResultRequisitions
                 {
                     Success = false,
-                    Code = (int)ResultsRequests.BadRequest,
+                    Code = ResultsRequests.BadRequest,
                     Message = "Ocorreu um erro ao deletar o usuário!",
                     Data = ex
                 };
@@ -164,14 +164,14 @@ namespace Control_Finance.Server.Services.Users
                     return new ResultRequisitions
                     {
                         Success = false,
-                        Code = (int)ResultsRequests.NotFound,
+                        Code = ResultsRequests.NotFound,
                         Message = "Usuário não encontrado!"
                     };
                 }
                 return new ResultRequisitions
                 {
                     Success = true,
-                    Code = (int)ResultsRequests.Success,
+                    Code = ResultsRequests.Success,
                     Message = "Usuário encontrado com sucesso!",
                     Data = new UsersDTO
                     {
@@ -190,7 +190,7 @@ namespace Control_Finance.Server.Services.Users
                 return new ResultRequisitions
                 {
                     Success = false,
-                    Code = (int)ResultsRequests.BadRequest,
+                    Code = ResultsRequests.BadRequest,
                     Message = "Ocorreu um erro ao buscar o usuário!",
                     Data = ex
                 };
@@ -209,7 +209,7 @@ namespace Control_Finance.Server.Services.Users
                     return [new ResultRequisitions
                     {
                         Success = false,
-                        Code = (int)ResultsRequests.NotFound,
+                        Code = ResultsRequests.NotFound,
                         Message = "Nenhum usuário encontrado!"
                     }];
                 }
@@ -218,7 +218,7 @@ namespace Control_Finance.Server.Services.Users
                     new ResultRequisitions
                     {
                         Success = true,
-                        Code = (int)ResultsRequests.Success,
+                        Code = ResultsRequests.Success,
                         Message = "Usuários encontrados com sucesso!",
                         Data = users.Select(user => new UsersDTO
                         {
@@ -240,7 +240,7 @@ namespace Control_Finance.Server.Services.Users
                     new ResultRequisitions
                     {
                         Success = false,
-                        Code = (int)ResultsRequests.BadRequest,
+                        Code = ResultsRequests.BadRequest,
                         Message = "Ocorreu um erro ao buscar os usuários!",
                         Data = ex
                     }

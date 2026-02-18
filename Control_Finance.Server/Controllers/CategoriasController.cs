@@ -23,10 +23,9 @@ namespace Control_Finance.Server.Controllers
                 {
                     return result.Code switch
                     {
-                        200 => Ok(new { result.Message, result.Code }),
-                        201 => Created("", new { result.Message, result.Code }),
-                        404 => NotFound(new { result.Message, result.Code }),
-                        409 => Conflict(new { result.Message, result.Code }),
+                        ResultsRequests.Success => Ok(new { result.Message, result.Code }),
+                        ResultsRequests.NotFound => NotFound(new { result.Message, result.Code }),
+                        ResultsRequests.Conflict => Conflict(new { result.Message, result.Code }),
                         _ => BadRequest(new { Message = "Erro ao atualizar usuário.", ErrorCode = result.Code, Error = result })
                     };
                 }
@@ -50,9 +49,9 @@ namespace Control_Finance.Server.Controllers
                 {
                     return result.Code switch
                     {
-                        200 => Ok(new { result.Message, result.Code }),
-                        404 => NotFound(new { result.Message, result.Code }),
-                        409 => Conflict(new { result.Message, result.Code }),
+                        ResultsRequests.Success => Ok(new { result.Message, result.Code }),
+                        ResultsRequests.NotFound => NotFound(new { result.Message, result.Code }),
+                        ResultsRequests.Conflict => Conflict(new { result.Message, result.Code }),
                         _ => BadRequest(new { Message = "Erro ao atualizar usuário.", ErrorCode = result.Code, Error = result })
                     };
                 }
@@ -110,9 +109,9 @@ namespace Control_Finance.Server.Controllers
                 {
                     return result.Code switch
                     {
-                        200 => Ok(new { result.Message, result.Code }),
-                        404 => NotFound(new { result.Message, result.Code }),
-                        409 => Conflict(new { result.Message, result.Code }),
+                        ResultsRequests.Success => Ok(new { result.Message, result.Code }),
+                        ResultsRequests.NotFound => NotFound(new { result.Message, result.Code }),
+                        ResultsRequests.Conflict => Conflict(new { result.Message, result.Code }),
                         _ => BadRequest(new { Message = "Erro ao atualizar usuário.", ErrorCode = result.Code, Error = result })
                     };
                 }

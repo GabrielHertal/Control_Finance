@@ -23,19 +23,19 @@ namespace Control_Finance.Server.Services.Conta
                 };
                 _context.Contas.Add(conta);
                 await _context.SaveChangesAsync();
-                return new ResultRequisitions
+                return new()
                 {
                     Success = true,
-                    Code = (int)ResultsRequests.Success,
+                    Code = ResultsRequests.Success,
                     Message = "Conta criada com sucesso"
                 };
             }
             catch (Exception ex)
             {
-                return new ResultRequisitions
+                return new()
                 {
                     Success = false,
-                    Code = (int)ResultsRequests.BadRequest,
+                    Code = ResultsRequests.BadRequest,
                     Message = $"Erro ao criar conta: {ex.Message}",
                     Data = ex
                 };
@@ -51,7 +51,7 @@ namespace Control_Finance.Server.Services.Conta
                     return new ResultRequisitions
                     {
                         Success = false,
-                        Code = (int)ResultsRequests.NotFound,
+                        Code = ResultsRequests.NotFound,
                         Message = "Conta não encontrada"
                     };
                 }
@@ -59,19 +59,19 @@ namespace Control_Finance.Server.Services.Conta
                 conta.Tipo_Conta = (TipoConta)tipo_conta;
                 conta.Ativo = ativo;
                 await _context.SaveChangesAsync();
-                return new ResultRequisitions
+                return new()
                 {
                     Success = true,
-                    Code = (int)ResultsRequests.Success,
+                    Code = ResultsRequests.Success,
                     Message = "Conta atualizada com sucesso"
                 };   
             }
             catch (Exception ex)
             {
-                return new ResultRequisitions
+                return new()
                 {
                     Success = false,
-                    Code = (int)ResultsRequests.BadRequest,
+                    Code = ResultsRequests.BadRequest,
                     Message = $"Erro ao atualizar conta: {ex.Message}",
                     Data = ex
                 };
@@ -87,25 +87,25 @@ namespace Control_Finance.Server.Services.Conta
                     return new ResultRequisitions
                     {
                         Success = false,
-                        Code = (int)ResultsRequests.NotFound,
+                        Code = ResultsRequests.NotFound,
                         Message = "Conta não encontrada"
                     };
                 }
                 conta.Ativo = false;
                 await _context.SaveChangesAsync();
-                return new ResultRequisitions
+                return new()
                 {
                     Success = true,
-                    Code = (int)ResultsRequests.Success,
+                    Code = ResultsRequests.Success,
                     Message = "Conta deletada com sucesso"
                 };
             }
             catch(Exception ex)
             {
-                return new ResultRequisitions
+                return new()
                 {
                     Success = false,
-                    Code = (int)ResultsRequests.BadRequest,
+                    Code = ResultsRequests.BadRequest,
                     Message = $"Erro ao deletar conta: {ex.Message}",
                     Data = ex
                 };
@@ -126,19 +126,19 @@ namespace Control_Finance.Server.Services.Conta
                                        .FirstOrDefaultAsync();
                 if (contas == null)
                 {
-                    return new ResultRequisitions
+                    return new()
                     {
                         Success = false,
-                        Code = (int)ResultsRequests.NotFound,
+                        Code = ResultsRequests.NotFound,
                         Message = "Nenhuma conta encontrada!"
                     };
                 }
                 else
                 {
-                    return new ResultRequisitions
+                    return new()
                     {
                         Success = true,
-                        Code = (int)ResultsRequests.Success,
+                        Code = ResultsRequests.Success,
                         Message = "Conta encontrada com sucesso!",
                         Data = contas
                     };
@@ -146,10 +146,10 @@ namespace Control_Finance.Server.Services.Conta
             }
             catch (Exception ex)
             {
-                return new ResultRequisitions
+                return new()
                 {
                     Success = false,
-                    Code = (int)ResultsRequests.BadRequest,
+                    Code = ResultsRequests.BadRequest,
                     Message = $"Erro ao buscar conta: {ex.Message}",
                     Data = ex
                 };
@@ -164,21 +164,21 @@ namespace Control_Finance.Server.Services.Conta
                                            .ToListAsync();
                 if (contas.Count == 0)
                 {
-                    return [new ResultRequisitions
+                    return [new()
                     {
                         Success = false,
-                        Code = (int)ResultsRequests.NotFound,
+                        Code = ResultsRequests.NotFound,
                         Message = "Nenhuma conta encontrada para este usuário!"
                     }];
                 }
                 else
                 {
-                    return new List<ResultRequisitions>
+                    return new()
                     {
-                        new ResultRequisitions
+                        new()
                         {
                             Success = true,
-                            Code = (int)ResultsRequests.Success,
+                            Code = ResultsRequests.Success,
                             Message = "Contas encontrada para este usuário!",
                             Data = contas.Select(c => new ContasDTO
                             {
@@ -192,12 +192,12 @@ namespace Control_Finance.Server.Services.Conta
             }
             catch(Exception ex)
             {
-                return new List<ResultRequisitions>
+                return new()
                 {
-                    new ResultRequisitions
+                    new()
                     {
                         Success = false,
-                        Code = (int)ResultsRequests.BadRequest,
+                        Code = ResultsRequests.BadRequest,
                         Message = $"Erro ao buscar contas: {ex.Message}",
                         Data = ex
                     }

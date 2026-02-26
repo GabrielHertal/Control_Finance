@@ -11,11 +11,12 @@ namespace Control_Finance.Server.DTO
         public DateOnly Data_Lancamento { get; set; }
         public DateOnly? Data_Vencimento { get; set; }
         public int? Fk_Id_Categoria { get; set; }
-        public decimal? Valor_Pago { get; set; }
-        public DateOnly? Data_Pagamento { get; set; }
+        public decimal? Valor_Pago { get; set; } = null;
+        public DateOnly? Data_Pagamento { get; set; } = null;
         public int Fk_Id_User { get; set; }
         public TipoLancamento Tipo_Lancamento { get; set; }
         public int Fk_Id_Conta { get; set; }    
         public bool Ativo { get; set; }
+        public string? Tipo_LancamentoSTR { get; set; } = null;
     }
 }

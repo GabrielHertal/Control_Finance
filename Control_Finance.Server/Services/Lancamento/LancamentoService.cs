@@ -216,7 +216,8 @@ namespace Control_Finance.Server.Services.Lancamento
                             Fk_Id_User = l.Fk_Id_User,
                             Tipo_Lancamento = (TipoLancamento)l.Tipo_Lancamento,
                             Fk_Id_Conta = l.Fk_Id_Conta,
-                            Ativo = l.Ativo
+                            Ativo = l.Ativo,
+                            Tipo_LancamentoSTR = Enum.GetName(typeof(TipoLancamento), l.Tipo_Lancamento)
                         }).ToList()
                     }
                 };

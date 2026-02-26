@@ -1,6 +1,34 @@
 import { Dropdown, Table } from "react-bootstrap";
+import { GetAllLancamentosByUserId } from "../Services/Lancamentos/api";
+import { useEffect, useState } from "react";
 
 const Lancamentos = () => {
+    const [Lancamento, setLancamento] = useState([]);
+
+    const fetchLancamentos = async () => {
+        try
+        {
+            const res = await GetAllLancamentosByUserId(localStorage.getItem("UserId"));
+            if (res && Array.isArray(res))
+            {
+                setLancamento(res[0].data[0]);
+            }
+            else
+            {
+                setLancamento([]);
+                console.error("Erro: a API não retornou um array válido." + res);
+            }
+        }
+        catch (error)
+        {
+            console.error("Erro ao buscar lançamentos:", error);
+            setLancamento([]);
+        }
+    };
+    useEffect(() => {
+        fetchLancamentos();
+    }, []);
+
     return (
         <div className="container py-5">
             <div className="d-flex justify-content-end align-items-end mb-4">
@@ -27,31 +55,19 @@ const Lancamentos = () => {
             <Table borderless responsive="bg" className="shadow-sm rounded-4">
                 <thead className="text-center">
                     <tr>
-                        <th>Data</th>
-                        <th>Descrição</th>
+                        <th>Data Vencimento</th>
+                        <th>Título</th>
                         <th>Valor</th>
-                        <th>Categoria</th>
+                        <th>Tipo</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody className="text-center">
-                    <tr>
-                        <td>01/01/2024</td>
-                        <td>Salário</td>
-                        <td>R$ 5.000,00</td>
-                        <td>Recebimento</td>
-                        <td>
-                            <div className="d-flex justify-content-center gap-2">
-                                <button className="btn btn-warning">Editar</button>
-                                <button className="btn btn-danger">Deletar</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>05/01/2024</td>
-                        <td>Aluguel</td>
-                        <td>R$ 1.200,00</td>
-                        <td>Despesa</td>
+                    <tr key={Lancamento.id}>
+                        <td>{Lancamento.data_Vencimento?.replace(/-/g, '/')}</td>
+                        <td>{Lancamento.titulo}</td>
+                        <td>{Lancamento.valor}</td>
+                        <td>{Lancamento.tipo_LancamentoSTR}</td>
                         <td>
                             <div className="d-flex justify-content-center gap-2">
                                 <button className="btn btn-warning">Editar</button>

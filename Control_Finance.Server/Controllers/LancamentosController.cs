@@ -9,7 +9,7 @@ namespace Control_Finance.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class LancamentosController(ILancamentoService lancamentoService) : ControllerBase
     {
         private readonly ILancamentoService _lancamentoService = lancamentoService;
@@ -19,7 +19,7 @@ namespace Control_Finance.Server.Controllers
             try
             {
                 var result = await _lancamentoService.CreateLancamentoAsync(lancamentoDTO.Titulo, lancamentoDTO.Descricao!, lancamentoDTO.Valor, lancamentoDTO.Data_Lancamento, lancamentoDTO.Data_Vencimento
-                                                                            , lancamentoDTO.Fk_Id_Categoria, lancamentoDTO.Valor_Pago, lancamentoDTO.Data_Pagamento, lancamentoDTO.Fk_Id_User
+                                                                            , lancamentoDTO.Fk_Id_Categoria, null, null, lancamentoDTO.Fk_Id_User
                                                                             , (int)lancamentoDTO.Tipo_Lancamento, lancamentoDTO.Fk_Id_Conta);
                 if (result.Success == true)
                 {
@@ -121,7 +121,7 @@ namespace Control_Finance.Server.Controllers
                 return StatusCode(500, $"Erro interno do servidor: {e.Message}");
             }
         }
-        [HttpGet("GetAllLancamentosByUserId{id}")]
+        [HttpGet("GetAllLancamentosByUserId/{id}")]
         public async Task<ActionResult<List<LancamentoDTO>>> GetAllLancamentosByUserId(int id)
         {
             try

@@ -23,9 +23,8 @@ namespace Control_Finance.Server.Models
         [ForeignKey("Categorias")]
         public int? Fk_Id_Categoria { get; set; }
         public Categorias? Categorias { get; set; }
-        [Required]
-        public decimal? Valor_Pago { get; set; }
-        public DateOnly? Data_Pagamento { get; set; }
+        public decimal? Valor_Pago { get; set; } = null;
+        public DateOnly? Data_Pagamento { get; set; } = null;
         [Required]
         [ForeignKey("AppUsers")]
         public required int Fk_Id_User { get; set; }
